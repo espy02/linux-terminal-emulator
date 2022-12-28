@@ -30,7 +30,7 @@ This program also includes exception handling for issues such as files/directori
 
 - `cp` can only copy a file that can be opened and edited. This is due the fact it uses Python's file handling function.
 
-## Future features:
+## Features to add:
 
 - A few more commands;
 - Switches for a few commands (such as `ls -l`);
