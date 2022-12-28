@@ -76,19 +76,19 @@ while run:
                 except PermissionError:
                     print(i)
 
-        case "mkdir":
+        case "mk":
             try:
-                os.mkdir(userInput)
+                file = open(userInput, "x")
+                file.close()
             except OSError:
                 if userInput in os.listdir(os.getcwd()):
                     print(f"File already exists: '{userInput}'")
                 else:
                     print(f"Invalid argument: '{userInput}'")
 
-        case "mk":
+        case "mkdir":
             try:
-                file = open(userInput, "x")
-                file.close()
+                os.mkdir(userInput)
             except OSError:
                 if userInput in os.listdir(os.getcwd()):
                     print(f"File already exists: '{userInput}'")
