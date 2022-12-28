@@ -1,4 +1,4 @@
-import os, textual
+import os
 run = True
 
 while run:
@@ -59,7 +59,6 @@ while run:
                 print(f"Invalid argument: '{arg[0]}'")
             except UnicodeDecodeError:
                 print(f"File could not be opened: '{arg[0]}'")
-
 
         case "echo":
             print(userInput)
