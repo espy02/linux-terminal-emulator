@@ -45,6 +45,6 @@ This program also includes exception handling for issues such as files/directori
 - Create a shortcut of the Windows terminal;
 - Right click and go to properties;
 - In the `Target` text box, enter the following:
-- `%windir%\system32\cmd.exe /k cd (directory) & python terminal.py & exit`
+- `%windir%\system32\cmd.exe /k cd (LTE directory) & python terminal.py & exit`
 - When you open this shortcut, the Windows terminal will change the current directory to the one specified, and will start Linux Terminal Emulator at the same time.
 - Then, once you use the `exit` command inside the LTE, the Windows terminal will close as well.
