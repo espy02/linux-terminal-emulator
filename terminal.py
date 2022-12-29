@@ -1,160 +1,80 @@
 import os
+from functions import *
 run = True
 
 while run:
-    userInput = ""
-    userInputList = input("$ ").split()
+    args = ""
+    argList = input("$ ").split()
 
-    if len(userInputList) > 0:
-        command = userInputList[0]
+    if len(argList) > 0:
+        command = argList[0]
+        argList.pop(0)
     else:
         command = ""
 
-    for i in range(1, len(userInputList)):
-        if i != len(userInputList) - 1:
-            userInput += userInputList[i] + " "
+    for i in range(len(argList)):
+        if i != len(argList) - 1:
+            args += argList[i] + " "
         else:
-            userInput += userInputList[i]
-
-    arg = userInput.split()
+            args += argList[i]
 
     match command:
 
         case "cat":
-            try:
-                file = open(userInput)
-                print(file.read())
-                file.close()
-            except FileNotFoundError:
-                print(f"File not found: '{userInput}'")
-            except (PermissionError, OSError):
-                print(f"Invalid argument: '{userInput}'")
-            except UnicodeDecodeError:
-                print(f"File could not be opened: '{userInput}'")
+            cat(args)
 
         case "cd":
-            try:
-                os.chdir(userInput)
-            except FileNotFoundError:
-                print(f"Directory not found: '{userInput}'")
-            except OSError:
-                print(f"Invalid argument: '{userInput}'")
+            cd(args)
 
         case "cp":
-            try:
-                fileFrom = open(arg[0])
-                fileData = fileFrom.read()
-                fileFrom.close()
-                try:
-                    fileTo = open(arg[1] + "\\" + arg[0], "w")
-                    fileTo.write(fileData)
-                    fileTo.close()
-                except FileNotFoundError:
-                    print(f"Directory not found: '{arg[1]}'")
-                except OSError:
-                    print(f"Invalid argument: '{arg[1]}'")
-            except FileNotFoundError:
-                print(f"File not found: '{arg[0]}'")
-            except OSError:
-                print(f"Invalid argument: '{arg[0]}'")
-            except UnicodeDecodeError:
-                print(f"File could not be opened: '{arg[0]}'")
+            if len(argList) == 2:
+                cp(argList[0], argList[1])
+            else:
+                cp("", "")
 
         case "echo":
-            print(userInput)
+            print(args)
 
         case "exit":
             run = False
 
+        case "help":
+            help(args)
+
         case "ls":
-            for i in os.listdir(os.getcwd()):
-                try:
-                    file = open(i)
-                    file.close()
-                    print(f"'{i}'")
-                except PermissionError:
-                    print(i)
+            if len(argList) > 0:
+                if argList[0] == "-l" and len(argList) == 1:
+                    ls_l(os.getcwd())
+                elif argList[0] == "-l" and len(argList) == 2:
+                    ls_l(argList[1])
+                else:
+                    ls(args)
+            else:
+                ls(args)
 
         case "mk":
-            try:
-                file = open(userInput, "x")
-                file.close()
-            except OSError:
-                if userInput in os.listdir(os.getcwd()):
-                    print(f"File already exists: '{userInput}'")
-                else:
-                    print(f"Invalid argument: '{userInput}'")
+            mk(args)
 
         case "mkdir":
-            try:
-                os.mkdir(userInput)
-            except OSError:
-                if userInput in os.listdir(os.getcwd()):
-                    print(f"File already exists: '{userInput}'")
-                else:
-                    print(f"Invalid argument: '{userInput}'")
+            mkdir(args)
 
         case "mv":
-            try:
-                os.rename(arg[0], arg[1] + "\\" + arg[0])
-            except FileNotFoundError:
-                print("No such file or directory.")
-            except OSError:
-                try:
-                    if arg[0] in os.listdir(arg[1]):
-                        print(f"File already exists: '{arg[0]}'")
-                    else:
-                        print(f"Invalid argument: '{arg[0]}'")
-                except OSError:
-                    print(f"Invalid argument: '{arg[1]}'")
+            if len(argList) == 2:
+                mv(argList[0], argList[1])
+            else:
+                mv("", "")
 
         case "pwd":
             print(os.getcwd())
 
         case "rm":
-            try:
-                os.remove(userInput)
-            except FileNotFoundError:
-                print(f"File not found: '{userInput}'")
-            except OSError:
-                print(f"Invalid argument: '{userInput}'")
+            rm(args)
 
         case "rmdir":
-            try:
-                os.rmdir(userInput)
-            except FileNotFoundError:
-                print(f"Directory not found: '{userInput}'")
-            except OSError:
-                print(f"Invalid argument: '{userInput}'")
+            rmdir(args)
 
         case "wc":
-            try:
-                lines = 0
-                words = 0
-                chars = 0
-
-                file = open(userInput)
-                fileData = file.read()
-                file.close()
-                for i in fileData:
-                    if i == "\n":
-                        lines += 1
-                    else:
-                        chars += 1
-                if chars > 0:
-                    lines += 1
-
-                fileData = fileData.strip().split()
-                for i in fileData:
-                    words += 1
-
-                print(lines, words, chars, userInput)
-            except FileNotFoundError:
-                print(f"File not found: '{userInput}'")
-            except (PermissionError, OSError):
-                print(f"Invalid argument: '{userInput}'")
-            except UnicodeDecodeError:
-                print(f"File could not be opened: '{userInput}'")
+            wc(args)
 
         case _:
-            print(f"Command not found: '{userInput}'")
+            print(f"Command not found: '{command}'")
