@@ -49,8 +49,8 @@ def cp(fileName, directory):
     else:
         print("Use: cp (file name or path) (directory)\nEnter 'help cp' for more information about this command.")
 
-def help(args):
-    match args:
+def help(command):
+    match command:
         case "cat":
             print("Use: cat (file name or path)\nConcatenate; displays file contents in the terminal.")
         case "cd":
@@ -84,7 +84,7 @@ def help(args):
         case "":
             print("Use: help (command) (switch; optional)\nList of available commands:\ncat / cd / cp / echo / exit / help / ls / mk / mkdir / mv / pwd / rm / rmdir / wc")
         case _:
-            print(f"Invalid argument: '{args}'")
+            print(f"Invalid argument: '{command}'")
 
 def ls(directory):
     try:
