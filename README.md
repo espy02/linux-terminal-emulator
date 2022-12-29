@@ -38,5 +38,12 @@ This program also includes exception handling for issues such as files/directori
 ## Known issues
 
 - `cp` can only copy a file that can be opened and edited.
-- `cp`, `mv` and `ls -l` will not work if the destination directory has a space somewhere.
+- `cp`, `mv` and `ls -l` will not work if the destination directory has a blank space somewhere.
 - `ls -l` might not display the correct size of a folder.
+
+## For a better experience in Windows:
+- Create a shortcut of the Windows terminal;
+- Right click and go to properties;
+- In the `Target` text box, enter the following:
+- `%windir%\system32\cmd.exe /k cd (directory) & python terminal.py`
+- Once you open this shortcut, the Windows terminal will change the current directory to the one specified, and will start Linux Terminal Emulator at the same time.
